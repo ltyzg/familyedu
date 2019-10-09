@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qishiyun.familyedu.mapper.TRecordMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.qishiyun.familyedu.entity.TRecord">
+		<id column="recordId" property="recordId" />
+		<result column="examId" property="examId" />
+		<result column="examUuid" property="examUuid" />
+		<result column="userId" property="userId" />
+		<result column="userUuid" property="userUuid" />
+		<result column="createTime" property="createTime" />
+		<result column="finishTime" property="finishTime" />
+		<result column="usedTime" property="usedTime" />
+		<result column="scoreInfo" property="scoreInfo" />
+		<result column="chainInfo" property="chainInfo" />
+		<result column="userInfo" property="userInfo" />
+		<result column="errorCount" property="errorCount" />
+		<result column="status" property="status" />
+		<result column="orgUuid" property="orgUuid" />
+		<result column="uUuid" property="uUuid" />
+		<result column="orgName" property="orgName" />
+		<result column="uName" property="uName" />
+		<result column="reportUrl" property="reportUrl" />
+		<result column="callbackInfo" property="callbackInfo" />
+		<result column="lastModule" property="lastModule" />
+	</resultMap>
+
+	<select id="getPrimaryRecordList1" resultType="com.qishiyun.familyedu.entity.RecordBase">
+		SELECT a.recordId,a.scoreInfo,a.createTime,a.finishTime,a.usedTime from t_record a,t_examination b,t_psy_testpaper c
+       where a.examUuid = b.examUuid and b.examStatus=1 and b.paperUuid = c.paperUuid and c.status=1 and
+       c.paperCode ='PrimaryFamilyEducationV3' and a.status !=0  and a.orgUuid =100000;
+	</select>
+
+	<select id="getJuniorRecordList1" resultType="com.qishiyun.familyedu.entity.RecordBase">
+		SELECT a.recordId,a.scoreInfo,a.createTime,a.finishTime,a.usedTime from t_record a,t_examination b,t_psy_testpaper c
+       where a.examUuid = b.examUuid and b.examStatus=1 and b.paperUuid = c.paperUuid and c.status=1 and
+       c.paperCode ='JuniorFamilyEducationV3' and a.status !=0 and a.orgUuid =100000;
+	</select>
+
+    <select id="getJuniorRecordList" resultType="com.qishiyun.familyedu.entity.RecordBase">
+		SELECT recordId,scoreInfo,createTime,usedTime
+		from t_record
+      where status !=0  and  orgUuid =100000 and examUuid = '0fd1cde2-db39-4b40-98d2-bb916eed036a'
+		and finishTime &gt;'2019-09-29 00:00:00' and finishTime &lt; '2019-10-03 00:00:00';
+	</select>
+
+    <select id="getPrimaryRecordList" resultType="com.qishiyun.familyedu.entity.RecordBase">
+		SELECT recordId,scoreInfo,createTime,usedTime
+		from t_record a
+       where status !=0 and orgUuid =100000 and examUuid = '54d0849a-7779-4cd7-aa1f-5acab942a3a9'
+		and finishTime &gt;'2019-09-29 00:00:00' and finishTime &lt; '2019-10-03 00:00:00';
+	</select>
+
+</mapper>
